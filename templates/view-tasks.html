@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}View Tasks{% endblock %}
+{% block content %}
+
+{% if noTasks %}
+    <p>There are currently no tasks in the database</p>
+{% else %}
+    <p>You have {{ tasks|length }} task(s)</p>
+    <table class="task-list">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Complete</th>
+            <th>Mark as Done</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task[1] }}</td>
+                <td>{{ task[2] }}</td>
+                <td>{{ task[3] }}</td>
+                {%if task[4] %}
+                    <td>Yes</td>
+                {%else%}
+                    <td>No</td>
+                {%endif%}
+                <td><button onClick="markTaskDone()">Done</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock %}

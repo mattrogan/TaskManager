@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{%block title%}{%endblock%} - My Task Manager</title>
+        <link rel="stylesheet" href="{{url_for("static", filename="css/styles.css")}}">
+        <div class="webpage-title">
+            <h1>My Task Manager</h1>
+        </div>
+
+        <div class="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="view-tasks">View tasks</a></li>
+                <li><a href="add-task">Add a task</a></li>
+            </ul>
+        </div>
+    </head>
+
+    <body>
+        <div class="main-content">
+        
+            {% block content %}{% endblock %}
+        
+        </div>
+    </body>
+</html>

@@ -1,0 +1,139 @@
+* {
+    background-color: #D1CCDC;
+    color: #424C55;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.webpage-title {
+    text-align: center;
+}
+
+.navbar {
+    background-color: #424C55;
+    display: flex;
+    justify-content: center;
+    padding: 1% 1% 1% 1%;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #424C55;
+}
+
+.navbar li {
+    margin: 0 10px;
+    background-color: #424C55;
+}
+
+.navbar a {
+    color: #D1CCDC;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #424C55;
+    box-sizing: border-box;
+}
+
+.navbar a:hover {
+    color: #F5DEF0;
+}
+
+.main-content {
+    text-align: center;
+    padding-top: 5%;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.task-form label {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.task-form input,
+.task-form textarea {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #e7e1f4;
+}
+
+button {
+    background-color: #424C55;
+    color: #D1CCDC;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:hover,
+button:focus {
+    color: #F5DEF0;
+}
+
+.link-button a {
+    background-color: #424C55;
+    color: #D1CCDC;
+    font-size: 16px;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.link-button a:focus,
+.link-button a:hover {
+    color: #F5DEF0;
+}
+
+.task-form button:hover {
+    background-color: #3D2C2E;
+}
+
+.task-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.task-list th,
+.task-list td {
+    border: 1px solid #424C55;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.task-list th {
+    background-color: #424C55;
+    color: #D1CCDC;
+    text-align: center;
+}
+
+/*
+.task-list td button {
+    background-color: #424C55;
+    color: #D1CCDC;
+    border: none;
+    padding: 2% 3% 2% 3%;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.task-list td button:hover,
+.task-list td button:focus {
+    color: #F5DEF0;
+}
+*/
