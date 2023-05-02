@@ -53,7 +53,7 @@ def view_tasks():
         conn = sqlite3.connect("tasks.db")
         cursor = conn.cursor()
         
-        tasks = cursor.execute("SELECT * FROM tasks").fetchall()
+        tasks = cursor.execute("SELECT * FROM tasks ORDER BY due_date").fetchall()
         
         if not tasks:
             return render_template("view-tasks.html", tasks=[], noTasks=True, dbError=False)
