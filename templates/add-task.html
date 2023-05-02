@@ -2,6 +2,9 @@
 {% block title %}Add a Task{%endblock%}
 {%block content%}
 
+{% if dbError %}
+<p>An error occurred with the database.</p>
+{% else %}
 <form action="/add-task" method="post" class="task-form">
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>
@@ -20,5 +23,5 @@
     <button type="submit">Add Task</button>
 </form>
 
-
+{% endif %}
 {%endblock%}

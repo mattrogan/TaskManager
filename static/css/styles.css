@@ -4,7 +4,7 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.webpage-title {
+.header {
     text-align: center;
 }
 
@@ -42,7 +42,8 @@
     color: #F5DEF0;
 }
 
-.main-content {
+
+.body {
     text-align: center;
     padding-top: 5%;
 }
@@ -120,20 +121,3 @@ button:focus {
     color: #D1CCDC;
     text-align: center;
 }
-
-/*
-.task-list td button {
-    background-color: #424C55;
-    color: #D1CCDC;
-    border: none;
-    padding: 2% 3% 2% 3%;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.task-list td button:hover,
-.task-list td button:focus {
-    color: #F5DEF0;
-}
-*/

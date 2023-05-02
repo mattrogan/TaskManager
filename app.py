@@ -5,15 +5,18 @@ from flask import Flask, render_template, url_for, request, redirect
 
 app = Flask(__name__)
 
-with sqlite3.connect("tasks.db") as conn:
-    cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS Tasks
-                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                       title TEXT NOT NULL,
-                       description TEXT,
-                       due_date DATE,
-                       complete BOOLEAN DEFAULT FALSE)''')
-    cursor.close()
+try:
+    with sqlite3.connect("tasks.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS Tasks
+                        (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        title TEXT NOT NULL,
+                        description TEXT,
+                        due_date DATE,
+                        complete BOOLEAN DEFAULT FALSE)''')
+        cursor.close()
+except sqlite3.DatabaseError:
+    print("An error occurred when trying to connect to the database")
     
 #endregion
 
@@ -30,44 +33,56 @@ def add_task():
         due_date = request.form["due_date"]
         complete = 0  # default value for complete is False (0)
         
-        conn = sqlite3.connect("tasks.db")
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO tasks (title, description, due_date, complete) VALUES (?, ?, ?, ?)",
-                  (title, description, due_date, complete))
-        conn.commit()
-        conn.close()
-        
-        return redirect(url_for("view_tasks"))
-    
-    return render_template("add-task.html")
-
-
+        try:
+            conn = sqlite3.connect("tasks.db")
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO tasks (title, description, due_date, complete) VALUES (?, ?, ?, ?)",
+                    (title, description, due_date, complete))
+            conn.commit()
+        except sqlite3.DatabaseError:
+            conn.rollback()
+            return redirect(url_for("add-task.html"))
+        finally:
+            conn.close()
+            
+    return render_template("add-task.html", dbError=False)
 
 @app.route("/view-tasks", methods=["GET"])
 def view_tasks():
-    conn = sqlite3.connect("tasks.db")
-    cursor = conn.cursor()
-    
-    tasks = cursor.execute("SELECT * FROM tasks").fetchall()
-    
-    if not tasks:
-        return render_template("view-tasks.html", tasks=[], noTasks=True)
-    else:
-        return render_template("view-tasks.html", tasks=tasks, noTasks=False)
-
-@app.route("/view-tasks/<int:id>")
+    try:
+        conn = sqlite3.connect("tasks.db")
+        cursor = conn.cursor()
+        
+        tasks = cursor.execute("SELECT * FROM tasks").fetchall()
+        
+        if not tasks:
+            return render_template("view-tasks.html", tasks=[], noTasks=True, dbError=False)
+        else:
+            return render_template("view-tasks.html", tasks=tasks, noTasks=False, dbError=False)
+    except sqlite3.DatabaseError:
+        conn.rollback()
+        return render_template("view-tasks", dbError=True)
+    finally:
+        conn.close()
+        
+@app.route("/view-tasks/<int:id>", methods=["GET"])
 def view_task(id):
-    conn = sqlite3.connect("tasks.db")
-    cursor = conn.cursor()
-    
-    # Code to get the task with the given id
-    task = cursor.execute("SELECT * FROM tasks WHERE id=?", (id,)).fetchone()
-    
-    if not task:
-        return render_template("view-task.html", task=None, noTask=True)
-    else:
-        return render_template("view-task.html", task=task, noTask=False)
-
+    try:
+        conn = sqlite3.connect("tasks.db")
+        cursor = conn.cursor()
+        
+        # Code to get the task with the given id
+        task = cursor.execute("SELECT * FROM tasks WHERE id=?", (id,)).fetchone()
+        
+        if not task:
+            return render_template("view-task.html", task=None, noTask=True, dbError=False)
+        else:
+            return render_template("view-task.html", task=task, noTask=False, dbError=False)
+    except sqlite3.DatabaseError:
+        conn.rollback()
+        return render_template("view-task.html", dbError=True)
+    finally:
+        conn.close()
 
 if __name__ == "__main__":
     app.run(debug=True)
